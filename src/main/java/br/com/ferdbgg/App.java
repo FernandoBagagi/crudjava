@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import br.com.ferdbgg.bancodedados.BD;
+import br.com.ferdbgg.bancodedados.BDException;
 import br.com.ferdbgg.bancodedados.IntegridadeBDException;
 
 public class App {
@@ -115,7 +116,7 @@ public class App {
 		}
 	}
 
-    public static void main(String[] args) {
+    public static void mainExclusão(String[] args) {
 
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -141,4 +142,45 @@ public class App {
 			BD.fecharConexao();
 		}
 	}
+
+    public static void main(String[] args) {
+
+		Connection conn = null;
+		Statement st = null;
+		try {
+			conn = BD.getConexao();
+	
+			conn.setAutoCommit(false);
+
+			st = conn.createStatement();
+			
+			int rows1 = st.executeUpdate("UPDATE seller SET BaseSalary = 2090 WHERE DepartmentId = 1");
+
+			//int x = 1;
+			//if (x < 2) {
+			//	throw new SQLException("Fake error");
+			//}
+			
+			int rows2 = st.executeUpdate("UPDATE seller SET BaseSalary = 3090 WHERE DepartmentId = 2");
+			
+			conn.commit();
+			
+			System.out.println("rows1 = " + rows1);
+			System.out.println("rows2 = " + rows2);
+		}
+		catch (SQLException e) {
+			try {
+				conn.rollback();
+				throw new BDException("Transaction rolled back! Caused by: " + e.getMessage());
+			} 
+			catch (SQLException e1) {
+				throw new BDException("Error trying to rollback! Caused by: " + e1.getMessage());
+			}
+		} 
+		finally {
+			BD.fecharStatement(st);
+			BD.fecharConexao();
+		}
+	}
+
 }
