@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import br.com.ferdbgg.bancodedados.BD;
+import br.com.ferdbgg.bancodedados.IntegridadeBDException;
 
 public class App {
     public static void mainConsulta(String[] args) {
@@ -33,7 +34,7 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
+    public static void mainInsecao(String[] args) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Connection conn = null;
@@ -82,6 +83,62 @@ public class App {
 		finally {
 			BD.fecharStatement(st);
 			BD.fecharConexao();;
+		}
+	}
+
+    public static void mainAtualizacao(String[] args) {
+
+		Connection conn = null;
+		PreparedStatement st = null;
+		try {
+			conn = BD.getConexao();
+	
+			st = conn.prepareStatement(
+					"UPDATE seller "
+					+ "SET BaseSalary = BaseSalary + ? "
+					+ "WHERE "
+					+ "(DepartmentId = ?)");
+
+			st.setDouble(1, 200.0);
+			st.setInt(2, 2);
+			
+			int rowsAffected = st.executeUpdate();
+			
+			System.out.println("Done! Rows affected: " + rowsAffected);
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		finally {
+			BD.fecharStatement(st);
+			BD.fecharConexao();
+		}
+	}
+
+    public static void main(String[] args) {
+
+		Connection conn = null;
+		PreparedStatement st = null;
+		try {
+			conn = BD.getConexao();
+	
+			st = conn.prepareStatement(
+					"DELETE FROM department "
+					+ "WHERE "
+					+ "Id = ?");
+
+			st.setInt(1, 5);
+			
+			int rowsAffected = st.executeUpdate();
+			
+			System.out.println("Done! Rows affected: " + rowsAffected);
+		}
+		catch (SQLException e) {
+			throw new IntegridadeBDException(e.getMessage());
+		} 
+		finally {
+			BD.fecharStatement(st);
+			BD.fecharConexao();
 		}
 	}
 }
