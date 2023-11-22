@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import br.com.ferdbgg.bancodedados.BD;
 import br.com.ferdbgg.bancodedados.BDException;
 import br.com.ferdbgg.bancodedados.IntegridadeBDException;
+import br.com.ferdbgg.entidades.Departamento;
 
 public class App {
     public static void mainConsulta(String[] args) {
@@ -184,7 +185,12 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		
+		Departamento departamento = new Departamento();
+		departamento.setId(1);
+		departamento.setNome("Compras");
+		System.out.println(departamento.hashCode());
+		System.out.println(departamento.equals(new Departamento(1, "Compras")));
+		System.out.println(departamento.toString());
 	}
 
 }
