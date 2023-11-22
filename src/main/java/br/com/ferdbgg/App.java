@@ -116,7 +116,7 @@ public class App {
 		}
 	}
 
-    public static void mainExclusão(String[] args) {
+    public static void mainExclusao(String[] args) {
 
 		Connection conn = null;
 		PreparedStatement st = null;
@@ -143,7 +143,7 @@ public class App {
 		}
 	}
 
-    public static void main(String[] args) {
+    public static void mainTransacaocao(String[] args) {
 
 		Connection conn = null;
 		Statement st = null;
@@ -181,6 +181,10 @@ public class App {
 			BD.fecharStatement(st);
 			BD.fecharConexao();
 		}
+	}
+
+	public static void main(String[] args) {
+		
 	}
 
 }
