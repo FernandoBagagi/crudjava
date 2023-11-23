@@ -12,8 +12,8 @@ import java.util.Date;
 import br.com.ferdbgg.bancodedados.BD;
 import br.com.ferdbgg.bancodedados.BDException;
 import br.com.ferdbgg.bancodedados.IntegridadeBDException;
-import br.com.ferdbgg.entidades.Departamento;
-import br.com.ferdbgg.entidades.Vendedor;
+import br.com.ferdbgg.model.entidades.Departamento;
+import br.com.ferdbgg.model.entidades.Vendedor;
 
 public class App {
     public static void mainConsulta(String[] args) {

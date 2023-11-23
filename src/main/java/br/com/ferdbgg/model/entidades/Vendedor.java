@@ -1,4 +1,4 @@
-package br.com.ferdbgg.entidades;
+package br.com.ferdbgg.model.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
