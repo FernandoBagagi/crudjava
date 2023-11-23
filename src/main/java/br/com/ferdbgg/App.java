@@ -7,11 +7,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import br.com.ferdbgg.bancodedados.BD;
 import br.com.ferdbgg.bancodedados.BDException;
 import br.com.ferdbgg.bancodedados.IntegridadeBDException;
 import br.com.ferdbgg.entidades.Departamento;
+import br.com.ferdbgg.entidades.Vendedor;
 
 public class App {
     public static void mainConsulta(String[] args) {
@@ -191,6 +193,18 @@ public class App {
 		System.out.println(departamento.hashCode());
 		System.out.println(departamento.equals(new Departamento(1, "Compras")));
 		System.out.println(departamento.toString());
+
+		Vendedor vendedor = new Vendedor();
+		vendedor.setId(1);
+		vendedor.setNome("Fernando");
+		vendedor.setEmail("fernando@gmail.com");
+		vendedor.setNascimento(new Date(123456789L));
+		vendedor.setSalarioBase(1234.56);
+		vendedor.setDepartamento(departamento);
+		System.out.println(vendedor.hashCode());
+		System.out.println(vendedor.equals(new Vendedor(1, "Fernando", "fernando@gmail.com", new Date(123456789L),1234.56, departamento)));
+		System.out.println(vendedor.toString());
+
 	}
 
 }
