@@ -12,6 +12,7 @@ import java.util.Date;
 import br.com.ferdbgg.bancodedados.BD;
 import br.com.ferdbgg.bancodedados.BDException;
 import br.com.ferdbgg.bancodedados.IntegridadeBDException;
+import br.com.ferdbgg.model.dao.FabricaDAO;
 import br.com.ferdbgg.model.entidades.Departamento;
 import br.com.ferdbgg.model.entidades.Vendedor;
 
@@ -187,7 +188,13 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		Departamento departamento = new Departamento();
+		
+		Departamento departamento = (Departamento)FabricaDAO.DAOS.get("Departamento").encontrarPorID(1);
+		System.out.println(departamento.hashCode());
+		System.out.println(departamento.equals(new Departamento(1, "Compras")));
+		System.out.println(departamento.toString());
+
+		/*Departamento departamento = new Departamento();
 		departamento.setId(1);
 		departamento.setNome("Compras");
 		System.out.println(departamento.hashCode());
@@ -204,6 +211,7 @@ public class App {
 		System.out.println(vendedor.hashCode());
 		System.out.println(vendedor.equals(new Vendedor(1, "Fernando", "fernando@gmail.com", new Date(123456789L),1234.56, departamento)));
 		System.out.println(vendedor.toString());
+		*/
 
 	}
 
