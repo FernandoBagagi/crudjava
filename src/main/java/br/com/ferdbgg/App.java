@@ -12,6 +12,7 @@ import java.util.Date;
 import br.com.ferdbgg.bancodedados.BD;
 import br.com.ferdbgg.bancodedados.BDException;
 import br.com.ferdbgg.bancodedados.IntegridadeBDException;
+import br.com.ferdbgg.model.dao.EntidadeDAO;
 import br.com.ferdbgg.model.dao.FabricaDAO;
 import br.com.ferdbgg.model.entidades.Departamento;
 import br.com.ferdbgg.model.entidades.Vendedor;
@@ -189,10 +190,19 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		Departamento departamento = (Departamento)FabricaDAO.DAOS.get("Departamento").encontrarPorID(1);
+		EntidadeDAO depDao = FabricaDAO.DAOS.get("Departamento");
+
+		Departamento departamento = (Departamento)depDao.encontrarPorID(1);
 		System.out.println(departamento.hashCode());
 		System.out.println(departamento.equals(new Departamento(1, "Compras")));
 		System.out.println(departamento.toString());
+		System.out.println(depDao.listar());
+		depDao.inserir(new Departamento(null, "Teste"));
+		System.out.println(depDao.listar());
+		depDao.atualizar(new Departamento(7, "Teste2"));;
+		System.out.println(depDao.listar());
+		depDao.deletarPorID(7);
+		System.out.println(depDao.listar());
 
 		/*Departamento departamento = new Departamento();
 		departamento.setId(1);
