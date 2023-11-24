@@ -1,11 +1,18 @@
 package br.com.ferdbgg.model.dao.impl;
 
+import java.sql.Connection;
 import java.util.List;
 
 import br.com.ferdbgg.model.dao.EntidadeDAO;
 import br.com.ferdbgg.model.entidades.Departamento;
 
 public class DepartamentoDAOJDBC implements EntidadeDAO<Departamento>{
+
+    private Connection conexao;
+
+    public DepartamentoDAOJDBC(Connection conexao) {
+        this.conexao = conexao;
+    }
 
     @Override
     public void inserir(Departamento entidade) {
