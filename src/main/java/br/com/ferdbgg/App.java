@@ -189,10 +189,25 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		
-		EntidadeDAO depDao = FabricaDAO.DAOS.get("Departamento");
 
-		Departamento departamento = (Departamento)depDao.encontrarPorID(1);
+		/*EntidadeDAO<Vendedor> vedDao = FabricaDAO.getDAO(Vendedor.class);
+		
+
+		System.out.println(vedDao.encontrarPorID(7));
+		Vendedor v = vedDao.encontrarPorID(7);
+		v.setNome("AAAAAAAAAA");
+		vedDao.atualizar(v);
+		System.out.println(vedDao.encontrarPorID(7));
+		vedDao.inserir(new Vendedor(null, "teste", "teste@gmail.com", new Date(), 1500.00, null));
+		System.out.println(vedDao.listar());
+		vedDao.deletarPorID(8);
+		System.out.println(vedDao.listar());*/
+		/*System.out.println(EntidadeDAO.class.getName());
+		
+		EntidadeDAO<Departamento> depDao = FabricaDAO.getDAO(Departamento.class);
+		//.DAOS.get("Departamento");
+
+		Departamento departamento = depDao.encontrarPorID(1);
 		System.out.println(departamento.hashCode());
 		System.out.println(departamento.equals(new Departamento(1, "Compras")));
 		System.out.println(departamento.toString());
@@ -202,7 +217,7 @@ public class App {
 		depDao.atualizar(new Departamento(7, "Teste2"));;
 		System.out.println(depDao.listar());
 		depDao.deletarPorID(7);
-		System.out.println(depDao.listar());
+		System.out.println(depDao.listar());*/
 
 		/*Departamento departamento = new Departamento();
 		departamento.setId(1);
