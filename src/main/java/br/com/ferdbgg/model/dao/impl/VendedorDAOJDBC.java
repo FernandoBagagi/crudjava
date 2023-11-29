@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.com.ferdbgg.bancodedados.BD;
 import br.com.ferdbgg.bancodedados.BDException;
@@ -17,6 +19,7 @@ import br.com.ferdbgg.model.entidades.Vendedor;
 public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
 
     private Connection conexao;
+    private Map<Integer, Departamento> departamentosConsultados = new HashMap<>();
 
     public VendedorDAOJDBC(Connection conexao) {
         this.conexao = conexao;
@@ -124,13 +127,19 @@ public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
         return vendedorBanco;
     }
 
-    private Departamento getDepartamentoBanco(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("idDepartamento");
+    private Departamento getDepartamentoBanco(final ResultSet resultSet) throws SQLException {
+        final int id = resultSet.getInt("idDepartamento");
         if(id != 0) {
-            Departamento departamentoBanco = new Departamento();
-            departamentoBanco.setId(id);
-            departamentoBanco.setNome(resultSet.getString("nomeDep"));
-            return departamentoBanco;
+            final String nome = resultSet.getString("nomeDep");
+            //Departamento departamentoBanco = departamentosConsultados.get(id);
+            return departamentosConsultados.computeIfAbsent(id, chave -> new Departamento(id, nome));
+            /*if(departamentoBanco == null) {
+                departamentoBanco = new Departamento();
+                departamentoBanco.setId(id);
+                departamentoBanco.setNome(resultSet.getString("nomeDep"));
+                departamentosConsultados.put(id, departamentoBanco);
+            }*/
+            //return departamentoBanco;
         }
         return null;
     }
@@ -153,6 +162,7 @@ public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
             BD.fecharResultSet(resultSet);
             BD.fecharStatement(statement);
         }
+        System.out.println(departamentosConsultados);
         return vendedores;
     }
     

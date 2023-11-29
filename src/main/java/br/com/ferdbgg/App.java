@@ -190,17 +190,17 @@ public class App {
 
 	public static void main(String[] args) {
 
-		/*EntidadeDAO<Vendedor> vedDao = FabricaDAO.getDAO(Vendedor.class);
+		EntidadeDAO<Vendedor> vedDao = FabricaDAO.getDAO(Vendedor.class);
 		
 
-		System.out.println(vedDao.encontrarPorID(7));
-		Vendedor v = vedDao.encontrarPorID(7);
-		v.setNome("AAAAAAAAAA");
-		vedDao.atualizar(v);
-		System.out.println(vedDao.encontrarPorID(7));
-		vedDao.inserir(new Vendedor(null, "teste", "teste@gmail.com", new Date(), 1500.00, null));
+		//System.out.println(vedDao.encontrarPorID(7));
+		//Vendedor v = vedDao.encontrarPorID(7);
+		//v.setNome("AAAAAAAAAA");
+		//vedDao.atualizar(v);
+		//System.out.println(vedDao.encontrarPorID(7));
+		//vedDao.inserir(new Vendedor(null, "teste", "teste@gmail.com", new Date(), 1500.00, null));
 		System.out.println(vedDao.listar());
-		vedDao.deletarPorID(8);
+		/*vedDao.deletarPorID(8);
 		System.out.println(vedDao.listar());*/
 		/*System.out.println(EntidadeDAO.class.getName());
 		
