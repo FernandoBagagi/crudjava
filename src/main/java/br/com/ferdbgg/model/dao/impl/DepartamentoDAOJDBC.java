@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +27,18 @@ public class DepartamentoDAOJDBC implements EntidadeDAO<Departamento>{
             final String query = "INSERT INTO departamento(nome) VALUES (?)";
             PreparedStatement statement = null;
             try {
-                statement = this.conexao.prepareStatement(query);
+                statement = this.conexao.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, entidade.getNome());
                 int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    ResultSet rs = statement.getGeneratedKeys();
+                    if (rs.next()) {
+                        entidade.setId(rs.getInt(1));
+                    }
+                    BD.fecharResultSet(rs);
+                } else {
+                    throw new BDException("Erro na inserção! Nenhuma linha foi afetada");
+                }
             } catch(SQLException e) {
                 throw new BDException(e.getMessage());
             } finally {
