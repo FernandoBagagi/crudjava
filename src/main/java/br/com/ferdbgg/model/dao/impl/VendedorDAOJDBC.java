@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
             final String query = "INSERT INTO vendedor(nome,email,nascimento,salarioBase,idDepartamento) VALUES (?,?,?,?,?)";
             PreparedStatement statement = null;
             try {
-                statement = this.conexao.prepareStatement(query);
+                statement = this.conexao.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, entidade.getNome());
                 statement.setString(2, entidade.getEmail());
                 statement.setDate(3, new java.sql.Date(entidade.getNascimento().getTime()));
@@ -42,6 +43,15 @@ public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
                     statement.setNull(5, Types.INTEGER);
                 }
                 int rowsAffected = statement.executeUpdate();
+                if (rowsAffected > 0) {
+                    ResultSet rs = statement.getGeneratedKeys();
+                    if (rs.next()) {
+                        entidade.setId(rs.getInt(1));
+                    }
+                    BD.fecharResultSet(rs);
+                } else {
+                    throw new BDException("Erro na inserção! Nenhuma linha foi afetada");
+                }
             } catch(SQLException e) {
                 throw new BDException(e.getMessage());
             } finally {
@@ -131,15 +141,7 @@ public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
         final int id = resultSet.getInt("idDepartamento");
         if(id != 0) {
             final String nome = resultSet.getString("nomeDep");
-            //Departamento departamentoBanco = departamentosConsultados.get(id);
             return departamentosConsultados.computeIfAbsent(id, chave -> new Departamento(id, nome));
-            /*if(departamentoBanco == null) {
-                departamentoBanco = new Departamento();
-                departamentoBanco.setId(id);
-                departamentoBanco.setNome(resultSet.getString("nomeDep"));
-                departamentosConsultados.put(id, departamentoBanco);
-            }*/
-            //return departamentoBanco;
         }
         return null;
     }
@@ -162,7 +164,6 @@ public class VendedorDAOJDBC implements EntidadeDAO<Vendedor>{
             BD.fecharResultSet(resultSet);
             BD.fecharStatement(statement);
         }
-        System.out.println(departamentosConsultados);
         return vendedores;
     }
     

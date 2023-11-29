@@ -198,8 +198,11 @@ public class App {
 		//v.setNome("AAAAAAAAAA");
 		//vedDao.atualizar(v);
 		//System.out.println(vedDao.encontrarPorID(7));
-		//vedDao.inserir(new Vendedor(null, "teste", "teste@gmail.com", new Date(), 1500.00, null));
-		System.out.println(vedDao.listar());
+		Vendedor v = new Vendedor(null, "teste", "teste@gmail.com", new Date(), 1500.00, null);
+		System.out.println(v);
+		vedDao.inserir(v);
+		System.out.println(v);
+		//System.out.println(vedDao.listar());
 		/*vedDao.deletarPorID(8);
 		System.out.println(vedDao.listar());*/
 		/*System.out.println(EntidadeDAO.class.getName());
